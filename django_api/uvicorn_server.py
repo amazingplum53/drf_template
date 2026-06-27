@@ -32,5 +32,6 @@ if __name__ == "__main__":
         workers=no_of_workers,
         timeout_keep_alive=5,
         log_level="info",
-        reload=settings.DEBUG
+        reload=settings.DEBUG,
+        lifespan="off"
     )
