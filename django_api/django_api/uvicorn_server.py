@@ -22,13 +22,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_api.settings")
 from django.conf import settings
 
 
-workers = 1 if settings.DEBUG else cpu_count()
-
 no_of_workers = 1 if settings.DEBUG else cpu_count()
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app", 
+        "django_api.asgi:application", 
         host="0.0.0.0",
         port=8000,
         workers=no_of_workers,
