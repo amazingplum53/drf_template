@@ -1,0 +1,8 @@
+{
+  "name": "Python Dev Container",
+  "dockerComposeFile": "compose.yml",
+  "service": "dev",
+  "remoteUser": "root",
+  "workspaceFolder": "/workspace/fastapi_template/",
+  "overrideCommand": true
+}
