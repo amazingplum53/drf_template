@@ -3,6 +3,6 @@
   "dockerComposeFile": "compose.yml",
   "service": "dev",
   "remoteUser": "root",
-  "workspaceFolder": "/workspace/fastapi_template/",
+  "workspaceFolder": "/workspace/drf_template/",
   "overrideCommand": true
 }

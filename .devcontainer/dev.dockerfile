@@ -1,7 +1,7 @@
 FROM python:3.12
 
 ENV BASEDIR="/workspace" 
-ENV PROJECT_NAME="fastapi_template" 
+ENV PROJECT_NAME="drf_template" 
 
 WORKDIR $BASEDIR/$PROJECT_NAME
 
