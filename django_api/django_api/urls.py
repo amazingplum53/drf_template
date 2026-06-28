@@ -18,19 +18,26 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse, FileResponse
+import warnings
+
 
 urlpatterns = [
     path('health/', lambda request: HttpResponse(status=204)),
 ]
 
 if settings.STATIC_URL == "/static/":
+    warnings.filterwarnings(
+        "ignore",
+        message="StreamingHttpResponse must consume synchronous iterators in order to serve them asynchronously.*",
+    )
     urlpatterns.extend(
         static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     )
 
+
 def frontend(request):
     return FileResponse(
-        open(settings.BASE_DIR / "static" / "index.html", "rb"),
+        open(settings.BASE_DIR / "static/index.html", "rb"),
         content_type="text/html",
     )
 
