@@ -24,5 +24,3 @@ RUN pip install uv
 
 RUN uv pip install -r /tmp/dev.requirements.txt --system
 
-RUN cd react && npm install
-
