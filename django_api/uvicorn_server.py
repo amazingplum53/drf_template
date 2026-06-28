@@ -8,14 +8,14 @@ from utils.keys import handle_secrets
 from utils.variables import load_variables
 
 
-STACK = os.getenv("STACK", "local")
-print(f"Using {STACK} env file")
+def bootstrap():
+    STACK = os.getenv("STACK", "local")
+    print(f"Using {STACK} env file")
 
+    load_variables(STACK)
+    handle_secrets(STACK)
 
-load_variables(STACK)
-
-handle_secrets(STACK)
-
+bootstrap()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_api.settings")
 
