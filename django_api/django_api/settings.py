@@ -15,7 +15,7 @@ import os
 import ast
 
 PROJECT_NAME = os.environ['PROJECT_NAME']
-BASE_DIR = f'/server/{PROJECT_NAME}'
+BASE_DIR = Path(f'/server/{PROJECT_NAME}')
 STACK = os.getenv("STACK", "local")
 
 
@@ -113,6 +113,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = os.environ["STATIC_URL"]
+STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
