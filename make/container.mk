@@ -1,8 +1,11 @@
 
 SERVICE ?= server
 
-shell:
+ssh:
 	$(COMPOSE) exec $(SERVICE) bash
+
+shell:
+	$(COMPOSE) exec $(SERVICE) ./django_api/manage.py shell 
 
 logs:
 	$(COMPOSE) logs --follow $(SERVICE)
