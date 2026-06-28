@@ -3,6 +3,7 @@
     "ALLOWED_HOSTS": ["localhost", "127.0.0.1"],
     "DEBUG": true,
     "PROTOCOL": "http",
+    "STATIC_URL": "/static/",
     "DATABASE":{
         "NAME": "local_db",
         "PORT": "5432",

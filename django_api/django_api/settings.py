@@ -11,21 +11,24 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import ast
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_NAME = os.environ['PROJECT_NAME']
+BASE_DIR = f'/server/{PROJECT_NAME}'
+STACK = os.getenv("STACK", "local")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zl()yoj#52nxks7o!_t$b$w-0lgf6qr^08-(7mu(yri2vk9u5@'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ["DEBUG"]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ast.literal_eval(os.environ["ALLOWED_HOSTS"])
 
 
 # Application definition
@@ -51,31 +54,26 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'django_api.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
 
-WSGI_APPLICATION = 'django_api.wsgi.application'
+ASGI_APPLICATION = 'django_api.asgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DATABASE = ast.literal_eval(os.environ["DATABASE"])
+
+if "HOST" not in DATABASE:
+    DATABASE["HOST"] = os.environ.get("DB_HOST")
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": DATABASE["NAME"],
+        "USER": DATABASE["USERNAME"],
+        "PASSWORD": os.environ["DB_PASSWORD"] ,
+        "HOST": DATABASE["HOST"],
+        "PORT": DATABASE["PORT"],
     }
 }
 
@@ -114,7 +112,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = os.environ["STATIC_URL"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
