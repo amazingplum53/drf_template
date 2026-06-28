@@ -7,6 +7,9 @@ shell:
 logs:
 	$(COMPOSE) logs --follow $(SERVICE)
 
+test:
+	$(COMPOSE) exec $(SERVICE) python ./django_api/manage.py test 
+
 restart:
 	$(COMPOSE) restart $(SERVICE)
 
