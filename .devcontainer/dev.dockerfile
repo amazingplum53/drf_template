@@ -11,7 +11,7 @@ COPY dev.requirements.txt /tmp/dev.requirements.txt
 
 RUN apt-get update
 
-RUN apt-get install -y curl git docker.io docker-compose awscli less make 
+RUN apt-get install -y curl git docker.io docker-compose awscli less make npm nodejs
 
 RUN curl -fsSL https://get.pulumi.com | sh
 
@@ -23,4 +23,6 @@ RUN git --version && pip --version && docker --version && pulumi version && aws 
 RUN pip install uv
 
 RUN uv pip install -r /tmp/dev.requirements.txt --system
+
+RUN cd react && npm install
 

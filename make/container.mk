@@ -14,4 +14,7 @@ up:
 	. .config/secret/secrets.source && \
 	$(COMPOSE) up server database
 
+npm_build:
+	cd react && npx vite build --config vite.config.js
+
 
