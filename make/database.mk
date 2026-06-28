@@ -1,14 +1,7 @@
-config_path := app/database
 
-db_init:
-	$(COMPOSE) exec server alembic init $(config_path)/migrations
+migrations:
+	$(COMPOSE) exec server ./django_api/manage.py makemigrations 
 
-db_current:
-	$(COMPOSE) exec server alembic -c $(config_path)/alembic.ini current
+migrate:
+	$(COMPOSE) exec server ./django_api/manage.py migrate 
 
-db_upgrade:
-	$(COMPOSE) exec server alembic -c $(config_path)/alembic.ini upgrade head
-
-MESSAGE := 
-db_revision:
-	$(COMPOSE) exec server alembic -c $(config_path)/alembic.ini revision --autogenerate -m "$(MESSAGE)"

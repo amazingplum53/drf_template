@@ -15,7 +15,7 @@ import os
 import ast
 
 PROJECT_NAME = os.environ['PROJECT_NAME']
-BASE_DIR = f'/server/{PROJECT_NAME}'
+BASE_DIR = Path(f'/server/{PROJECT_NAME}')
 STACK = os.getenv("STACK", "local")
 
 
@@ -34,12 +34,12 @@ ALLOWED_HOSTS = ast.literal_eval(os.environ["ALLOWED_HOSTS"])
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'herd.apps.HerdConfig'
 ]
 
 MIDDLEWARE = [
@@ -71,9 +71,11 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": DATABASE["NAME"],
         "USER": DATABASE["USERNAME"],
-        "PASSWORD": os.environ["DB_PASSWORD"] ,
         "HOST": DATABASE["HOST"],
         "PORT": DATABASE["PORT"],
+        "PASSWORD": os.environ["DB_PASSWORD"]
+        if STACK != "local" 
+        else DATABASE["PASSWORD"],
     }
 }
 
@@ -113,6 +115,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = os.environ["STATIC_URL"]
+STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

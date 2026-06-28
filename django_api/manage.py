@@ -2,10 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from uvicorn_server import bootstrap
 
 
 def main():
     """Run administrative tasks."""
+    bootstrap()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_api.settings')
     try:
         from django.core.management import execute_from_command_line
