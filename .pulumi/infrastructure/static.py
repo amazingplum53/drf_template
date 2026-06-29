@@ -71,6 +71,23 @@ def cdn(stage: str, project_name: str, bucket: aws.s3.BucketV2, domain_name: str
         signing_protocol="sigv4",
     )
 
+    cors_policy = aws.cloudfront.ResponseHeadersPolicy(
+        f"{stage}-cdn-cors-policy-{project_name}".replace("_", "-"),
+        cors_config=aws.cloudfront.ResponseHeadersPolicyCorsConfigArgs(
+            access_control_allow_credentials=False,
+            access_control_allow_headers=aws.cloudfront.ResponseHeadersPolicyCorsConfigAccessControlAllowHeadersArgs(
+                items=["*"],
+            ),
+            access_control_allow_methods=aws.cloudfront.ResponseHeadersPolicyCorsConfigAccessControlAllowMethodsArgs(
+                items=["GET", "HEAD"],
+            ),
+            access_control_allow_origins=aws.cloudfront.ResponseHeadersPolicyCorsConfigAccessControlAllowOriginsArgs(
+                items=[f"https://{domain_name}"],
+            ),
+            origin_override=True,
+        ),
+    )
+
     # 3) Build the CloudFront Distribution using the us-east-1 provider
     distribution = aws.cloudfront.Distribution(
         f"{stage}-cdnDistribution-{project_name}",
@@ -86,6 +103,7 @@ def cdn(stage: str, project_name: str, bucket: aws.s3.BucketV2, domain_name: str
             viewer_protocol_policy="redirect-to-https",
             allowed_methods=["GET", "HEAD"],
             cached_methods=["GET", "HEAD"],
+            response_headers_policy_id=cors_policy.id,
             forwarded_values=aws.cloudfront.DistributionDefaultCacheBehaviorForwardedValuesArgs(
                 query_string=False,
                 cookies=aws.cloudfront.DistributionDefaultCacheBehaviorForwardedValuesCookiesArgs(
