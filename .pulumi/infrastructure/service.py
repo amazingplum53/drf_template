@@ -35,7 +35,7 @@ def ecs(
     alb_sg: aws.ec2.SecurityGroup,
     task_security_group: aws.ec2.SecurityGroup,
     db_host_name: Output[str]
-) -> Tuple[aws.iam.Role, aws.ecs.TaskDefinition, aws.ecs.Service]:
+) -> Tuple[aws.iam.Role, aws.ecs.TaskDefinition, aws.ecs.Service, str]:
     """
     Registers an ECS Task Definition & Fargate Service running `image`
     behind the given ALB target_group.
@@ -129,7 +129,8 @@ def ecs(
     return (
         task_execution_role,
         task_def,
-        container_service
+        container_service,
+        container_name
     )
 
 

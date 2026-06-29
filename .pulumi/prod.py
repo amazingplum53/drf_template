@@ -53,7 +53,7 @@ def deploy(stage: str, project_name: str):
 
     ECR, IMAGE = service.ecr(stage, project_name, PROJECT_ROOT)
 
-    TASK_EXE_ROLE, TASK_DEF, CONTAINER_SERVICE = service.ecs(
+    TASK_EXE_ROLE, TASK_DEF, CONTAINER_SERVICE, CONTAINER_NAME = service.ecs(
         stage, 
         project_name,
         CLUSTER, 
@@ -65,4 +65,12 @@ def deploy(stage: str, project_name: str):
         TASK_SECURITY_GROUP,
         DB_CLUSTER.endpoint,
     )
+
+    pulumi.export("migration_config", {
+        "cluster": CLUSTER.name,
+        "task_definition": TASK_DEF.arn,
+        "container": CONTAINER_NAME,
+        "subnets": PRIVATE_SUBNET_IDS,
+        "security_group": TASK_SECURITY_GROUP.id,
+    })
 
