@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import ast
 
+
 PROJECT_NAME = os.environ['PROJECT_NAME']
 BASE_DIR = Path(f'/server/{PROJECT_NAME}')
 STACK = os.getenv("STACK", "local")
@@ -39,10 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'herd.apps.HerdConfig'
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    "django_api.middleware.HealthCheckMiddleware",
 ]
 
 ROOT_URLCONF = 'django_api.urls'
