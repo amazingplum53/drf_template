@@ -50,6 +50,9 @@ jobs:
       - name: Run make deploy in dev container
         run: docker exec dev bash -c "make deploy"
 
+      - name: Run django migrations
+        run: docker exec dev bash -c "make migrate_task"
+
       - name: Clean up containers
         run: docker compose -f .devcontainer/compose.yml down
 
