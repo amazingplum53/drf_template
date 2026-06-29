@@ -10,3 +10,6 @@ deploy:
 destroy:
 	pulumi destroy --cwd ./.pulumi/ --stack $(STACK) --yes
 
+
+migrate_task:
+	STACK=$(STACK) AWS_REGION=eu-west-2 ./.pulumi/migrate_task.sh
