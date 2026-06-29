@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse, FileResponse
+from django.shortcuts import render
 import warnings
 
 
@@ -36,10 +37,7 @@ if settings.STATIC_URL == "/static/":
 
 
 def frontend(request):
-    return FileResponse(
-        open(settings.BASE_DIR / "static/index.html", "rb"),
-        content_type="text/html",
-    )
+    return render(request, "index.html")
 
 frontend_routes = [
     path("auth/signup/", frontend),
